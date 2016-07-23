@@ -1,6 +1,7 @@
 package com.theironyard;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -17,9 +18,11 @@ public class VSChat1Controller {
         this.messenger = messenger;
     }
 
-    @MessageMapping("/chat")
-    @SendTo("/topic/chat")
-    public String sendMessage(String msg) {
+    @MessageMapping("/topic/chat")
+    @SendTo("/chat")
+    //@SendTo("/topic/chat")
+    public Message sendMessage(Message msg) {
+        System.out.println(new String((byte[]) msg.getPayload()));
         return msg;
     }
 }

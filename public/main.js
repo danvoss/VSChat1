@@ -1,16 +1,29 @@
 var socket;
 
 function start() {
-    var ws = new SockJS("/chat")
+    var ws = new SockJS('/socket')
     socket = Stomp.over(ws)
 
     socket.connect({}, onSocketConnected)
 }
 
 function onSocketConnected() {
-    socket.subscribe("/topic/chat", sendMessage)
+    socket.subscribe('/chat', onReceiveMessage)
+    //socket.subscribe('/topic/chat', sendMessage)
 }
 
 function sendMessage() {
-    socket.send("/app/chat", {}, $('#msg').val());
+    var s = JSON.stringify({message: $('#msg').val()});
+    socket.send("/topic/chat", {}, s);
+    //socket.send('/chat', {}, JSON.stringify({message: $('#msg').val()}));
+    //socket.send('/app/chat', {}, JSON.stringify({message: $('#msg').val()}));
 }
+
+function onReceiveMessage() {
+
+}
+
+function showMessage() {
+}
+
+start();
