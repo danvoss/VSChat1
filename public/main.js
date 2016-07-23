@@ -19,7 +19,10 @@ function sendMessage() {
     //socket.send('/app/chat', {}, JSON.stringify({message: $('#msg').val()}));
 }
 
-function onReceiveMessage() {
+function onReceiveMessage(message) {
+    data = JSON.parse(message.body); // empty
+    document.getElementById('newMessage').appendChild(document.createTextNode(data));
+
 
 }
 
